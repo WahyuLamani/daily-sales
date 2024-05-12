@@ -1,0 +1,53 @@
+aplikasi penjualan tapi hanya dalam bentuk record order, tidak ada transaksi online
+proses bisnis terkait dengan penjualan produk dan log costumers dengan isi report penjualan produk.
+
+1. requirement 
+    database 
+        table : users -> sesuai laravel +
+                     -> inherit atau polimorph
+                     -> is admin
+        table : customers -> id
+                          -> name
+                          -> ID/NIK
+                          -> contact_no
+                          -> genre
+                          -> email
+                          -> Address
+                          -> notes
+                          -> images(file)
+        table : products -> id
+                         -> quantity_type
+                         -> category
+                         -> quantity
+                         -> product_cost
+                         -> sell_price
+                         -> notes
+        table : sales -> uuid 
+                      -> customer_name
+                      -> products_to_buy
+                      -> discount(percent or flatrate)
+                      -> tax(percent or flatrate)
+                      -> tracing_number
+                      -> total
+                      -> profit
+                      -> status
+                      -> paymant_type
+                      -> images(file)
+        sub_table(seed) : quantity_table -> id
+                                         -> name value(["Bottle","Box","Case","Centimeter","Dozer","Feet","Gallon","Gram","Hours","inch","Kilogram","kilometer","Litre","m2","Meter","Metric Ton","Microgram","Mile","Miligram","Mililitre","Milimeter","Ounce","Pack","Pair","Piece","Pound","Roll","Set","Strip","Ton","Unit","Yard"])
+        sub_table(seed) : category -> id
+                                   -> Name default_val("no aplicable")
+
+
+    menu : 
+        pada menu Settings : - Dashboard
+                            - Profile
+                            - Language (tidak memungkinkan tapi nnti di cari solusinya atau di except)
+                            - signout
+
+        representative : data diri login user
+        report : dalam bentuk table berisi penjualan(belum fix)
+    middlewere : 
+        agent tidak bisa menambahkan products, hanya bisa view, update stok barang by admin
+        
+                    
