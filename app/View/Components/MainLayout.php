@@ -6,12 +6,12 @@ use Illuminate\View\Component;
 
 class MainLayout extends Component
 {
-    public $resources = ['resources/sass/app.scss', 'resources/js/app.js'];
+    public $resources = ['resources/sass/app.scss', 'resources/css/app.css', 'resources/js/app.js'];
     public $title;
-    public function __construct($resources,$title)
+    public function __construct($resources, $title)
     {
-        $resources = explode(',',$resources);
-        $this->resources = array_merge($this->resources,$resources);
+        $resources = explode(',', $resources);
+        $this->resources = array_merge($this->resources, $resources);
         $this->title = $title;
     }
 
@@ -22,7 +22,7 @@ class MainLayout extends Component
      */
     public function render()
     {
-        
+
         return view('components.main-layout');
     }
 }

@@ -1,4 +1,4 @@
-<x-main-layout resources="resources/css/app.css,resources/js/jquery.js,resources/js/datatables.js,resources/js/chart.js" title="Home">
+<x-main-layout resources="resources/js/jquery.js,resources/js/datatables.js,resources/js/chart.js" title="Home">
     <h1 class="app-page-title">Overview</h1>
     <hr class="mb-4">
     <div class="container">
