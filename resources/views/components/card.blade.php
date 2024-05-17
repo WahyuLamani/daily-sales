@@ -15,7 +15,6 @@
         </div>
     </div>
     <div class="app-card-body px-4">
-        
         <div class="intro">Sed maximus, libero ac pharetra elementum, turpis nisi molestie neque, et tincidunt velit turpis non enim.</div>
     </div>
     <div class="app-card-footer p-4 mt-auto">
