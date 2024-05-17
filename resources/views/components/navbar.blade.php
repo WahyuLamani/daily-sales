@@ -19,7 +19,7 @@
                 </div><!--//app-utility-item-->
                 
                 <div class="app-utility-item app-user-dropdown dropdown">
-                    <a class="dropdown-toggle" id="user-dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Wahyu Lamani</a>
+                    <a class="dropdown-toggle" id="user-dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">{{ucwords(Auth::user()->name)}}</a>
                     <ul class="dropdown-menu" aria-labelledby="user-dropdown-toggle">
                         <li><a class="dropdown-item" href="">Account</a></li>
                         <li><a class="dropdown-item" href="">Settings</a></li>
