@@ -1,7 +1,23 @@
 <x-main-layout resources="resources/js/jquery.js,resources/js/datatables.js,resources/js/chart.js" title="Home">
-    <h1 class="app-page-title">Overview</h1>
-    <hr class="mb-4">
-    <div class="container">
+    <div class="container-fuild">
+        <h1 class="app-page-title">Overview</h1>
+        <div class="row g-4 mb-4">
+            <x-card-dashboard/>
+            <x-card-dashboard/>
+            <x-card-dashboard/>
+            <x-card-dashboard/>
+        </div><!--//row-->
+        <div class="row g-4 mb-2">
+            <div class="col-12 col-lg-4">
+                <x-card/>
+            </div>
+            <div class="col-12 col-lg-4">
+                <x-card/>
+            </div>
+            <div class="col-12 col-lg-4">
+                <x-card/>
+            </div>
+        </div>
         <div class="my-3">
             <div class="card">
                 <div class="card-body">
@@ -83,8 +99,6 @@
                 </table>
             </div>
         </div>
-
-       
     </div>
 
     <script type="module">
