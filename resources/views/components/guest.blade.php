@@ -12,21 +12,9 @@
     <!-- Fonts -->
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
     <!-- Scripts -->
-    @vite($resources)
+    @vite(['resources/sass/app.scss', 'resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="app">
-        <nav class="app-header fixed-top">	   	            
-            <x-navbar/>
-            <x-sidebar/>
-        </nav>
-        
-        <div class="app-wrapper">
-            <div class="app-content pt-3 p-md-3 p-lg-4">
-                <div class="container-xl">
-                    {{$slot}}
-                </div>
-            </div>
-	    <x-footer/>	    
-    </div>>
+<body>   	
+    {{$slot}}
 </body>
 </html>
