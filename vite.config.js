@@ -6,6 +6,7 @@ export default defineConfig({
         laravel({
             input: [
                 'resources/css/app.css',
+                'resources/css/dataTables.bootstrap5.css',
                 'resources/sass/app.scss',
                 'resources/js/app.js',
                 'resources/js/datatables.js',

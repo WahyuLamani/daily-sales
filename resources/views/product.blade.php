@@ -1,4 +1,4 @@
-<x-main-layout resources="resources/js/datatables.js" title="Home">
+<x-main-layout resources="resources/js/datatables.js,resources/css/dataTables.bootstrap5.css" title="Home">
     <div class="container-fuild">
         <h1 class="app-page-title">Produk</h1>
 

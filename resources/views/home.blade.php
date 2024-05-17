@@ -1,4 +1,6 @@
-<x-main-layout resources="resources/js/jquery.js,resources/js/datatables.js,resources/js/chart.js" title="Home">
+<x-main-layout
+    resources="resources/js/jquery.js,'resources/css/dataTables.bootstrap5.css',resources/js/datatables.js,resources/js/chart.js"
+    title="Home">
     <div class="container-fuild">
         <h1 class="app-page-title">Overview</h1>
         <div class="row g-4 mb-4">
