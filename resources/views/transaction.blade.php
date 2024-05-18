@@ -1,6 +1,6 @@
-<x-main-layout resources="resources/js/datatables.js,resources/css/dataTables.bootstrap5.css" title="Product">
+<x-main-layout resources="resources/js/datatables.js,resources/css/dataTables.bootstrap5.css" title="Transaction">
     <div class="container-fuild">
-        <h1 class="app-page-title">Produk</h1>
+        <h1 class="app-page-title">Transaction</h1>
 
         <x-modal modal-id='newProduk' title='Buat produk baru'>
             <div class="row">
