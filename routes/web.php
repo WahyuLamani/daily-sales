@@ -24,5 +24,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/products', [ProductController::class, 'store'])->name('store.products');
     Route::get('/order', [TransactionController::class, 'index'])->name('transaction');
     Route::post('/order', [TransactionController::class, 'store'])->name('store.transaction');
+    Route::get('produk/{id}/harga-stok', [TransactionController::class, 'getProductAmount']);
 });
 Route::get('/about', [HomeController::class, 'about'])->name('about');

@@ -11,27 +11,40 @@ class TransactionController extends Controller
 {
     public function index()
     {
-        $transactions = Transaction::with('transactionDetail.nama_produk')->get();
+        $transactions = Transaction::with('transactionDetails.nama_produk')->get();
         $products = Product::all();
         return view('transaction', compact('transactions', 'products'));
     }
 
     public function store(Request $request)
     {
-        dd($request);
-        $request->validate([
-            'tanggal_transaksi' => 'required|date',
-            'produk.*.id_produk' => 'required|exists:produk,id_produk',
-            'produk.*.jumlah' => 'required|integer|min:1',
-            'produk.*.subtotal' => 'required|numeric|min:0',
-        ]);
+        // $request->validate([
+        //     'tanggal_transaksi' => 'required|date',
+        //     'produk.*.id_produk' => 'required|exists:produk,id_produk',
+        //     'produk.*.jumlah' => 'required|integer|min:1',
+        //     'produk.*.subtotal' => 'required|numeric|min:0',
+        // ]);
+        foreach ($request->produk as $item) {
+            $produk = Product::find($item['id_produk']);
+
+            // Periksa apakah jumlah pembelian melebihi stok
+            if ($produk->stok < $item['jumlah']) {
+                return redirect()->back()->with('error', 'Jumlah pembelian melebihi stok produk ' . $produk->nama_produk);
+            }
+
+            // Kurangi stok produk
+            $produk->update([
+                'stok' => $produk->stok - $item['jumlah'],
+            ]);
+        }
 
         $transaksi = Transaction::create([
             'id_pelanggan' => $request->id_pelanggan,
-            'tanggal_Transaction' => $request->tanggal_transaksi,
+            'tanggal_transaksi' => $request->tanggal_transaksi,
             'total_harga' => $request->total_harga,
             'status_pembayaran' => $request->status_pembayaran,
             'metode_pembayaran' => $request->metode_pembayaran,
+            'jumlah_pembayaran' => $request->jumlah_pembayaran,
         ]);
 
         foreach ($request->produk as $item) {
@@ -44,5 +57,10 @@ class TransactionController extends Controller
         }
 
         return redirect()->route('transaction')->with('success', 'Transaksi berhasil dibuat');
+    }
+    function getProductAmount($id)
+    {
+        $produk = Product::find($id);
+        return response()->json(['harga' => $produk->harga, 'stok' => $produk->stok]);
     }
 }

@@ -8,10 +8,12 @@ class Modal extends Component
 {
     public $modalId;
     public $title;
-    public function __construct($modalId,$title)
+    public $size;
+    public function __construct($modalId, $title, $size)
     {
         $this->modalId = $modalId;
         $this->title = $title;
+        $this->size = $size;
     }
 
     /**

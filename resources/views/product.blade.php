@@ -2,7 +2,7 @@
     <div class="container-fuild">
         <h1 class="app-page-title">Produk</h1>
 
-        <x-modal modal-id='newProduk' title='Buat produk baru'>
+        <x-modal modal-id='newProduk' title='Buat produk baru' size=''>
             <div class="row">
                 <form action="" method="post">@csrf
                     <div class="mb-3">
@@ -19,7 +19,7 @@
                         <label for="kategori" class="form-label">Kategori</label>
                         <select name="kategori" class="form-control @error('kategori') is-invalid @enderror"
                             id="kategori">
-                            <option selected disabled>select one</option>
+                            <option selected disabled>Pilih kategori </option>
                             @foreach ($categories as $category)
                             <option value="{{$category->id}}">{{$category->nama_kategori}}</option>
                             @endforeach
@@ -59,7 +59,7 @@
         <div class="row">
             <div class="app-card">
                 <button type="button" class="btn app-btn-primary mt-3" data-bs-toggle="modal"
-                    data-bs-target="#newProduk">
+                    data-bs-target="#modalnewProduk">
                     Create produk baru
                 </button>
                 <div class="p-3">
