@@ -5,25 +5,29 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\Transaction;
 use App\Models\TransactionDetail;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TransactionController extends Controller
 {
     public function index()
     {
-        $transactions = Transaction::with('transactionDetails.nama_produk')->get();
+        $transactions = Transaction::with('transactionDetails')->get();
         $products = Product::all();
         return view('transaction', compact('transactions', 'products'));
     }
 
     public function store(Request $request)
     {
-        // $request->validate([
-        //     'tanggal_transaksi' => 'required|date',
-        //     'produk.*.id_produk' => 'required|exists:produk,id_produk',
-        //     'produk.*.jumlah' => 'required|integer|min:1',
-        //     'produk.*.subtotal' => 'required|numeric|min:0',
-        // ]);
+        $request->validate([
+            'status_pembayaran' => 'required',
+            'produk.*.id_produk' => 'required|exists:products,id',
+            'produk.*.jumlah' => 'required|integer|min:1',
+            'produk.*.subtotal' => 'required|numeric|min:0',
+            'jumlah_pembayaran' => 'required|numeric|min:0',
+        ]);
         foreach ($request->produk as $item) {
             $produk = Product::find($item['id_produk']);
 
@@ -38,29 +42,40 @@ class TransactionController extends Controller
             ]);
         }
 
-        $transaksi = Transaction::create([
-            'id_pelanggan' => $request->id_pelanggan,
-            'tanggal_transaksi' => $request->tanggal_transaksi,
-            'total_harga' => $request->total_harga,
+        $transaksi = Auth::user()->transactions()->create([
+            'tanggal_transaksi' => isset($request->tanggal_transaksi) ? $request->tanggal_transaksi . ' ' . Carbon::now()->format('H:i:s') : Carbon::now()->format('Y-m-d H:i:s'),
+            'total_harga' => $request->jumlah_pembayaran,
             'status_pembayaran' => $request->status_pembayaran,
-            'metode_pembayaran' => $request->metode_pembayaran,
-            'jumlah_pembayaran' => $request->jumlah_pembayaran,
         ]);
 
         foreach ($request->produk as $item) {
             TransactionDetail::create([
-                'id_transaksi' => $transaksi->id,
-                'id_produk' => $item['id_produk'],
+                'transaction_id' => $transaksi->id,
+                'product_id' => $item['id_produk'],
                 'jumlah' => $item['jumlah'],
                 'subtotal' => $item['subtotal'],
             ]);
         }
 
-        return redirect()->route('transaction')->with('success', 'Transaksi berhasil dibuat');
+        return redirect()->route('transaction')->with('success', 'Transaksi berhasil');
     }
     function getProductAmount($id)
     {
         $produk = Product::find($id);
         return response()->json(['harga' => $produk->harga, 'stok' => $produk->stok]);
+    }
+
+    function showPDF($id)
+    {
+        $transaction = Transaction::with('transactionDetails')->find($id);
+        $pdf = PDF::loadView('export.transaction-detail', compact('transaction'))->setPaper('a4');
+        return $pdf->stream('transaksi_' . $id . '.pdf');
+    }
+
+    function downloadPDF($id)
+    {
+        $transaction = Transaction::with('transactionDetails')->find($id);
+        $pdf = PDF::loadView('export.transaction-detail', compact('transaction'))->setPaper('a4');
+        return $pdf->download('invoice.pdf');
     }
 }

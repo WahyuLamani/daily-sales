@@ -63,7 +63,7 @@
                     Create produk baru
                 </button>
                 <div class="p-3">
-                    <table class="table table-striped">
+                    <table id='data-table' class="table table-striped">
                         <thead>
                             <tr>
                                 <th>No.</th>
