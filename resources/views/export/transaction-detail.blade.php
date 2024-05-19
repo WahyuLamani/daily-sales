@@ -42,6 +42,7 @@
         <div class="header">
             <h1>Detail Transaksi</h1>
             <p>ID Transaksi: {{ $transaction->id }}</p>
+            <small>Tanggal Cetak : {{Carbon\Carbon::now()}}</small>
         </div>
         <div class="details">
             <h3>Salesman</h3>

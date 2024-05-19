@@ -50,4 +50,7 @@ proses bisnis terkait dengan penjualan produk dan log costumers dengan isi repor
     middlewere : 
         agent tidak bisa menambahkan products, hanya bisa view, update stok barang by admin
         
-                    
+    table analisis 
+    perhitungan => perbulan
+    klasifikasi => perkategori
+    
