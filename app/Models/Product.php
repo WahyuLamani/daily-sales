@@ -13,6 +13,11 @@ class Product extends Model
 
     public function category()
     {
-        return $this->belongsTo(ProductCategory::class,'product_category_id');
+        return $this->belongsTo(ProductCategory::class, 'product_category_id');
+    }
+
+    function transactionDetails()
+    {
+        return $this->hasMany(TransactionDetail::class);
     }
 }

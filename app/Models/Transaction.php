@@ -56,4 +56,21 @@ class Transaction extends Model
             ->orderBy('year', 'asc')
             ->orderBy('month', 'asc');
     }
+
+    public static function fixTotalPembayaran()
+    {
+        $transaksiList = self::with(['transactionDetails' => function ($query) {
+            $query->with('product');
+        }])->get(); //or you can short using self::with(['transactionDetails.product'])->get();
+        foreach ($transaksiList as $transaksi) {
+            $newTotal = 0;
+            foreach ($transaksi->transactionDetails as $item) {
+                $item->subtotal = $item->jumlah * $item->product->harga;
+                $item->save();
+                $newTotal += $item->subtotal;
+            }
+            $transaksi->total_harga = $newTotal;
+            $transaksi->save();
+        }
+    }
 }

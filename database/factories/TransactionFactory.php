@@ -21,7 +21,7 @@ class TransactionFactory extends Factory
         return [
             'user_id' => rand(1, User::count()),
             'tanggal_transaksi' => fake()->dateTimeBetween('-2 years', 'now', 'WITA'),
-            'total_harga' => rand(1, 100) . '000',
+            'total_harga' => rand(1, 100) . 000,
             'status_pembayaran' => 'lunas',
         ];
     }

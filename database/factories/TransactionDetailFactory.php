@@ -22,7 +22,7 @@ class TransactionDetailFactory extends Factory
             'transaction_id' => rand(1, Transaction::count()),
             'product_id' => rand(1, Product::count()),
             'jumlah' => rand(1, 5),
-            'subtotal' => rand(10, 1000) . 000,
+            'subtotal' => rand(10, 100) . 000,
         ];
     }
 }
