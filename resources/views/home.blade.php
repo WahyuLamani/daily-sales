@@ -27,14 +27,9 @@
         $(document).ready(function(){
             (async function() {
                 let transaksiPerMonthByCategory = {{Js::from($datasets)}};
-                let months = {{Js::from($months)}}
-                console.log(months);
-
-                // var labels = transaksiPerMonthByCategory[Object.keys(transaksiPerMonthByCategory)[0]].data.map(function(item, index) {
-                // return index + 1;
-                // });
-                let labels = Object.values(months);
-
+                let labels = {{Js::from($labels)}}
+                console.log(labels);
+                console.log(transaksiPerMonthByCategory);
                 var data = Object.keys(transaksiPerMonthByCategory).map(function(key) {
                     return transaksiPerMonthByCategory[key].data;
                 });
@@ -54,7 +49,7 @@
                                 label: transaksiPerMonthByCategory[key].label,
                                 data: data[index],
                                 backgroundColor: colors[index],
-                                borderWidth: 1
+                                borderWidth: 1.3,
                                 };
                             })
                         },
