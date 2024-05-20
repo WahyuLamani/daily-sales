@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id');
             $table->timestamp('tanggal_transaksi');
-            $table->float('total_harga');
+            $table->double('total_harga');
             $table->enum('status_pembayaran', ['belum lunas', 'lunas']);
             $table->timestamps();
         });

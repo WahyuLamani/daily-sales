@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('transaction_id');
             $table->foreignId('product_id');
             $table->integer('jumlah');
-            $table->float('subtotal');
+            $table->double('subtotal');
             $table->timestamps();
         });
     }

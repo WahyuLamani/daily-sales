@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('nama_produk');
             $table->foreignId('product_category_id');
-            $table->float('harga');
+            $table->double('harga');
             $table->integer('stok');
             $table->timestamps();
         });
