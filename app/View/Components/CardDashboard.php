@@ -6,14 +6,12 @@ use Illuminate\View\Component;
 
 class CardDashboard extends Component
 {
-    /**
-     * Create a new component instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    public $value;
+    public $key;
+    public function __construct($value, $key)
     {
-        //
+        $this->value = $value;
+        $this->key = $key;
     }
 
     /**
