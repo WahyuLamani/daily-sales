@@ -20,23 +20,17 @@ class HomeController extends Controller
                 'backgroundColor' => '#' . substr(md5(rand()), 0, 6) // Warna acak untuk setiap dataset
             ];
         });
-
-
-        $data = Transaction::totalPerMonth()->get();
-        $transaksiPerMonth = $data->map(function ($item) {
-            return [
-                'year' => $item->year,
-                'month' => $item->month,
-                'total' => $item->total
-            ];
+        // buat bulan
+        $months = $transaksiPerMonthAndCategory->groupBy('month')->map(function ($items, $key) {
+            return date('F', mktime(0, 0, 0, $key, 10)); // Mengubah angka bulan menjadi nama bulan
         });
 
         $count = collect();
         $transactions = Transaction::all();
-        $count["Total Transaksi"] = $transactions->count();
-        $count["Total Penjualan 1 Bulan terakhir"] = Transaction::monthLatest()->sum('total_harga');
-        $count["Total Penjualan"] = $transactions->sum('total_harga');
-        $count["Total Transaksi 1 Bulan terakhir"] = Transaction::monthLatest()->count();
-        return view('home', compact('count', 'datasets'));
+        $count["Penjualan"] = $transactions->sum('total_harga');
+        $count["Transaksi"] = $transactions->count();
+        $count["Penjualan bulan terakhir"] = Transaction::monthLatest()->sum('total_harga');
+        $count["Transaksi Bulan terakhir"] = Transaction::monthLatest()->count();
+        return view('home', compact('count', 'datasets', 'months'));
     }
 }

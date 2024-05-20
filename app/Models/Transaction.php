@@ -72,5 +72,6 @@ class Transaction extends Model
             $transaksi->total_harga = $newTotal;
             $transaksi->save();
         }
+        return "Oke";
     }
 }
