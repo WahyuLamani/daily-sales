@@ -63,27 +63,36 @@
                     </a><!--//nav-link-->
                     <div id="submenu-2" class="collapse submenu submenu-2 {{Route::is('transaction') ? 'show' : ''}}" data-bs-parent="#menu-accordion">
                         <ul class="submenu-list list-unstyled">
-                            <li class="submenu-item"><a class="submenu-link {{Route::is('transaction') ? 'active' : ''}}" href="{{route('transaction')}}">Order Baru</a></li>
-                            <li class="submenu-item"><a class="submenu-link" href="">List penjualan</a></li>
+                            <li class="submenu-item"><a class="submenu-link {{Route::is('transaction') ? 'active' : ''}}" href="{{route('transaction')}}">Orders</a></li>
+                            <li class="submenu-item"><a class="submenu-link" href="#"><span class="text-muted">Comming Soon</span></a></li>
                         </ul>
                     </div>
                 </li>
-                <li class="nav-item">
-                    <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                    <a class="nav-link" href="">
+                <li class="nav-item has-submenu">
+                    <a class="nav-link submenu-toggle {{Route::is('analisis') ? 'active' : ''}}" href="#" data-bs-toggle="collapse" data-bs-target="#submenu-3" aria-expanded="false" aria-controls="submenu-3">
                         <span class="nav-icon">
-                        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard2-data" viewBox="0 0 16 16">
-                        <path d="M9.5 0a.5.5 0 0 1 .5.5.5.5 0 0 0 .5.5.5.5 0 0 1 .5.5V2a.5.5 0 0 1-.5.5h-5A.5.5 0 0 1 5 2v-.5a.5.5 0 0 1 .5-.5.5.5 0 0 0 .5-.5.5.5 0 0 1 .5-.5z"/>
-                        <path d="M3 2.5a.5.5 0 0 1 .5-.5H4a.5.5 0 0 0 0-1h-.5A1.5 1.5 0 0 0 2 2.5v12A1.5 1.5 0 0 0 3.5 16h9a1.5 1.5 0 0 0 1.5-1.5v-12A1.5 1.5 0 0 0 12.5 1H12a.5.5 0 0 0 0 1h.5a.5.5 0 0 1 .5.5v12a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5z"/>
-                        <path d="M10 7a1 1 0 1 1 2 0v5a1 1 0 1 1-2 0zm-6 4a1 1 0 1 1 2 0v1a1 1 0 1 1-2 0zm4-3a1 1 0 0 0-1 1v3a1 1 0 1 0 2 0V9a1 1 0 0 0-1-1"/>
-                        </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard2-data" viewBox="0 0 16 16">
+                                <path d="M9.5 0a.5.5 0 0 1 .5.5.5.5 0 0 0 .5.5.5.5 0 0 1 .5.5V2a.5.5 0 0 1-.5.5h-5A.5.5 0 0 1 5 2v-.5a.5.5 0 0 1 .5-.5.5.5 0 0 0 .5-.5.5.5 0 0 1 .5-.5z"/>
+                                <path d="M3 2.5a.5.5 0 0 1 .5-.5H4a.5.5 0 0 0 0-1h-.5A1.5 1.5 0 0 0 2 2.5v12A1.5 1.5 0 0 0 3.5 16h9a1.5 1.5 0 0 0 1.5-1.5v-12A1.5 1.5 0 0 0 12.5 1H12a.5.5 0 0 0 0 1h.5a.5.5 0 0 1 .5.5v12a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5z"/>
+                                <path d="M10 7a1 1 0 1 1 2 0v5a1 1 0 1 1-2 0zm-6 4a1 1 0 1 1 2 0v1a1 1 0 1 1-2 0zm4-3a1 1 0 0 0-1 1v3a1 1 0 1 0 2 0V9a1 1 0 0 0-1-1"/>
+                            </svg>
                         </span>
-                         <span class="nav-link-text">Analisis</span>
+                        <span class="nav-link-text">Analisis</span>
+                         <span class="submenu-arrow">
+                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-down" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+                            </svg>
+                         </span><!--//submenu-arrow-->
                     </a><!--//nav-link-->
-                </li><!--//nav-item-->			    
-            </ul><!--//app-menu-->
-        </nav><!--//app-nav-->
+                    <div id="submenu-3" class="collapse submenu submenu-3 {{Route::is('analisis') ? 'show' : ''}}" data-bs-parent="#menu-accordion">
+                        <ul class="submenu-list list-unstyled">
+                            <li class="submenu-item"><a class="submenu-link {{Route::is('analisis') ? 'active' : ''}}" href="{{route('analisis')}}">Buat Analisa</a></li>
+                            <li class="submenu-item"><a class="submenu-link" href="#"><span class="text-muted">Comming Soon</span></a></li>
+                        </ul>
+                    </div>
+                </li>    
+            </ul>
+        </nav>
         <div class="app-sidepanel-footer">
             <nav class="app-nav app-nav-footer">
                 <ul class="app-menu footer-menu list-unstyled">

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AnalisisController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\TransactionController;
@@ -27,5 +28,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('produk/{id}/harga-stok', [TransactionController::class, 'getProductAmount']);
     Route::get('transaksi/{id}/pdf', [TransactionController::class, 'showPDF']);
     Route::get('transaksi/{id}/download', [TransactionController::class, 'downloadPDF']);
+
+    Route::get('analisis', [AnalisisController::class, 'index'])->name('analisis');
+    Route::get('transaksi-data', [AnalisisController::class, 'getTransaksiData'])->name('transaksi.data');
 });
 Route::get('/about', [HomeController::class, 'about'])->name('about');

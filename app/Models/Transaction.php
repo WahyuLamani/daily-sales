@@ -74,4 +74,22 @@ class Transaction extends Model
         }
         return "Oke";
     }
+
+    public static function getTransaksiByCategoryAndDateRange($startDate, $endDate, $kategoriId)
+    {
+        return self::select(
+            'product_categories.nama_kategori',
+            DB::raw('YEAR(tanggal_transaksi) as year'),
+            DB::raw('MONTH(tanggal_transaksi) as month'),
+            DB::raw('SUM(transaction_details.jumlah * products.harga) as total')
+        )
+            ->join('transaction_details', 'transaction_details.transaction_id', '=', 'transactions.id')
+            ->join('products', 'products.id', '=', 'transaction_details.product_id')
+            ->join('product_categories', 'product_categories.id', '=', 'products.product_category_id')
+            ->whereBetween('tanggal_transaksi', [$startDate, $endDate])
+            ->where('product_categories.id', $kategoriId)
+            ->groupBy('product_categories.nama_kategori', 'year', 'month')
+            ->orderBy('year', 'asc')
+            ->orderBy('month', 'asc');
+    }
 }

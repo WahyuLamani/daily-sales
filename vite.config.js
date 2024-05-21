@@ -12,6 +12,8 @@ export default defineConfig({
                 'resources/js/datatables.js',
                 'resources/js/jquery.js',
                 'resources/js/chart.js',
+                'resources/js/leastSquare.js',
+                'resources/js/regression.js',
             ],
             refresh: true,
         }),
