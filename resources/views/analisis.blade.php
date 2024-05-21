@@ -39,7 +39,10 @@
             <div class="col-md-5">
                 <div class="card mt-2">
                     <div class="card-body">
-                        <h5>Hasil Analisis</h5>
+                        <div class="card-title d-flex justify-content-between">
+                            <h5>Hasil Analisis</h5>
+                            <button id="predictNextMonth" class="btn app-btn-primary">Prediksi bulan selanjutnya</button>
+                        </div>
                         <table class="table table-bordered" id="hasilAnalisisTable">
                             <thead>
                                 <tr>
@@ -68,6 +71,14 @@
         $("#showAfter").hide();
         $(document).ready(function(){
             let chartInstance = null;
+            let x = [];
+            let y = [];
+            let analisisData = [];
+            let labels = [];
+            let result;
+            let gradient;
+            let intercept;
+            let futureDateIndex = 0;
             function getMonthName(monthNumber) {
                 const monthNames = [
                     "Januari", "Februari", "Maret", "April", "Mei", "Juni",
@@ -81,7 +92,13 @@
                 let startDate = $('#start_date').val();
                 let endDate = $('#end_date').val();
                 let kategoriId = $('#kategori').val();
-
+                x = [];
+                y = [];
+                analisisData = [];
+                labels = [];
+                result;
+                gradient;
+                intercept;
 
                 $.ajax({
                     url: '{{ route("transaksi.data") }}',
@@ -94,10 +111,7 @@
                     success: function(data) {
                         console.log(data);  // Periksa struktur data di console
 
-                        let x = [];
-                        let y = [];
-                        let analisisData = [];
-                        let labels = [];
+                        
 
                         data.forEach(function(item, index) {
                             let monthYear = getMonthName(item.month);
@@ -110,14 +124,14 @@
                                 year: item.year,
                                 month: monthYear,
                                 total: item.total,
-                                prediksi: 6 // Placeholder for prediction value
+                                prediksi: 0 // Placeholder for prediction value
                             });
                         });
 
                         // Least Square Calculation using regression package
-                        const result = regression.linear(x.map((value, index) => [value, y[index]]));
-                        const gradient = result.equation[0];
-                        const intercept = result.equation[1];
+                        result = regression.linear(x.map((value, index) => [value, y[index]]));
+                        gradient = result.equation[0];
+                        intercept = result.equation[1];
 
                         x.forEach(function(value, index) {
                             analisisData[index].prediksi = gradient * value + intercept;
@@ -193,6 +207,38 @@
                     }
                 });
             })
+            $('#predictNextMonth').click(function() {
+                futureDateIndex++;
+                let lastIndex = labels.length;
+                let futureDate = new Date();
+                futureDate.setMonth(futureDate.getMonth() + futureDateIndex);
+                let prediksiMonth = getMonthName(futureDate.getMonth() + 1) + ' ' + futureDate.getFullYear();
+                let prediksiNilai = gradient * (lastIndex + 1) + intercept;
+
+                labels.push(prediksiMonth);
+                y.push(null); // Tidak ada data total untuk bulan prediksi
+                analisisData.push({
+                    kategori: '',
+                    year: futureDate.getFullYear(),
+                    month: prediksiMonth,
+                    total: 0,
+                    prediksi: prediksiNilai
+                });
+
+                // Update Table
+                let tableBody = $('#hasilAnalisisTable tbody');
+                tableBody.append('<tr>' +
+                    '<td>' + prediksiMonth + '</td>' +
+                    '<td>0</td>' +
+                    '<td>' + prediksiNilai.toFixed(2) + '</td>' +
+                    '</tr>');
+
+                // Update Chart
+                chartInstance.data.labels = labels;
+                chartInstance.data.datasets[1].data = analisisData.map(item => item.prediksi);
+                chartInstance.update();
+            });
+
         });
     </script>
 </x-main-layout>
