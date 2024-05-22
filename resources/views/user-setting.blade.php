@@ -1,4 +1,4 @@
-<x-main-layout resources="resources/js/datatables.js,resources/js/jquery.js,resources/js/sweetalert2.js" title="Setting">
+<x-main-layout resources="resources/js/datatables.js,resources/css/dataTables.bootstrap5.css,resources/js/jquery.js,resources/js/sweetalert2.js" title="Setting">
     <div class="container-fuild">
         <h1 class="app-page-title">Settings</h1>
         <x-modal modal-id='CreateUser' title='Buat User baru' size=''>
