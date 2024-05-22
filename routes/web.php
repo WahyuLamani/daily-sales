@@ -32,6 +32,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('analisis', [AnalisisController::class, 'index'])->name('analisis');
     Route::get('transaksi-data', [AnalisisController::class, 'getTransaksiData'])->name('transaksi.data');
+    Route::get('account/', [UserController::class, 'account'])->name('user.account');
+    Route::post('account/', [UserController::class, 'update'])->name('user.account.update');
     Route::get('users/setting', [UserController::class, 'index'])->name('user.setting');
     Route::post('users/setting', [UserController::class, 'store'])->name('user.create');
     Route::delete('/users/setting/{user}', [UserController::class, 'destroy']);
