@@ -4,6 +4,7 @@ use App\Http\Controllers\AnalisisController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,5 +32,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('analisis', [AnalisisController::class, 'index'])->name('analisis');
     Route::get('transaksi-data', [AnalisisController::class, 'getTransaksiData'])->name('transaksi.data');
+    Route::get('user/setting', [UserController::class, 'index'])->name('user.setting');
+    Route::post('user/setting', [UserController::class, 'store'])->name('user.create');
 });
 Route::get('/about', [HomeController::class, 'about'])->name('about');

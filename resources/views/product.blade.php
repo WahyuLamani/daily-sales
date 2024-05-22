@@ -1,7 +1,6 @@
 <x-main-layout resources="resources/js/datatables.js,resources/css/dataTables.bootstrap5.css" title="Product">
     <div class="container-fuild">
         <h1 class="app-page-title">Produk</h1>
-
         <x-modal modal-id='newProduk' title='Buat produk baru' size=''>
             <div class="row">
                 <form action="" method="post">@csrf
