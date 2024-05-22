@@ -259,7 +259,4 @@
             });
         });
     </script>
-    <script>
-    </script>
-            
 </x-main-layout>
