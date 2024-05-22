@@ -3,7 +3,7 @@
     <div class="sidepanel-inner d-flex flex-column">
         <a href="#" id="sidepanel-close" class="sidepanel-close d-xl-none">&times;</a>
         <div class="app-branding">
-            <a class="app-logo" href="{{route('home')}}"><span class="logo-text">PORTAL ANALISIS</span></a>
+            <a class="app-logo" href="{{route('home')}}"><span class="logo-text">PORTAL ANALYSIS</span></a>
 
         </div><!--//app-branding-->  
         
@@ -77,7 +77,7 @@
                                 <path d="M10 7a1 1 0 1 1 2 0v5a1 1 0 1 1-2 0zm-6 4a1 1 0 1 1 2 0v1a1 1 0 1 1-2 0zm4-3a1 1 0 0 0-1 1v3a1 1 0 1 0 2 0V9a1 1 0 0 0-1-1"/>
                             </svg>
                         </span>
-                        <span class="nav-link-text">Analisis</span>
+                        <span class="nav-link-text">Analysis</span>
                          <span class="submenu-arrow">
                              <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-down" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
@@ -86,7 +86,7 @@
                     </a><!--//nav-link-->
                     <div id="submenu-3" class="collapse submenu submenu-3 {{Route::is('analisis') ? 'show' : ''}}" data-bs-parent="#menu-accordion">
                         <ul class="submenu-list list-unstyled">
-                            <li class="submenu-item"><a class="submenu-link {{Route::is('analisis') ? 'active' : ''}}" href="{{route('analisis')}}">Buat Analisa</a></li>
+                            <li class="submenu-item"><a class="submenu-link {{Route::is('analisis') ? 'active' : ''}}" href="{{route('analisis')}}">Least Square</a></li>
                             <li class="submenu-item"><a class="submenu-link" href="#"><span class="text-muted">Comming Soon</span></a></li>
                         </ul>
                     </div>

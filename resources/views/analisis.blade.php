@@ -1,6 +1,6 @@
-<x-main-layout resources="resources/js/jquery.js,resources/js/chart.js,resources/js/regression.js" title="Analisis">
+<x-main-layout resources="resources/js/jquery.js,resources/js/chart.js,resources/js/regression.js" title="Analysis">
     <div class="container-fuild">
-        <h1 class="app-page-title">Analisis</h1>
+        <h1 class="app-page-title">Least Square Analysis</h1>
         <div class="card">
             <div class="card-body">
                 <form id="transaksiForm">
