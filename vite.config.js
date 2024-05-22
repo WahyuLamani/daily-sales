@@ -14,6 +14,7 @@ export default defineConfig({
                 'resources/js/chart.js',
                 'resources/js/leastSquare.js',
                 'resources/js/regression.js',
+                'resources/js/sweetalert2.js',
             ],
             refresh: true,
         }),

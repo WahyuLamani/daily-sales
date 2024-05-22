@@ -32,7 +32,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('analisis', [AnalisisController::class, 'index'])->name('analisis');
     Route::get('transaksi-data', [AnalisisController::class, 'getTransaksiData'])->name('transaksi.data');
-    Route::get('user/setting', [UserController::class, 'index'])->name('user.setting');
-    Route::post('user/setting', [UserController::class, 'store'])->name('user.create');
+    Route::get('users/setting', [UserController::class, 'index'])->name('user.setting');
+    Route::post('users/setting', [UserController::class, 'store'])->name('user.create');
+    Route::delete('/users/setting/{user}', [UserController::class, 'destroy']);
+    Route::post('/users/setting/{user}/reset-password', [UserController::class, 'resetPassword']);
 });
 Route::get('/about', [HomeController::class, 'about'])->name('about');

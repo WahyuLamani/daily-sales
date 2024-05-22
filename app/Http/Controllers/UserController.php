@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -30,5 +31,23 @@ class UserController extends Controller
         ]);
 
         return redirect()->route('user.setting')->with('success', 'User baru telah di buat');
+    }
+
+    public function destroy(User $user)
+    {
+        $user->delete();
+        return response()->json(['message' => 'Success']);
+    }
+
+    public function resetPassword(User $user)
+    {
+        $newPassword = Str::random(8);
+        // Update the user's password
+        $user->password = Hash::make($newPassword);
+        $user->save();
+
+        // Return the new password for demonstration purposes
+        // In a real application, you might send this password via email
+        return response()->json(['message' => 'Password has been reset.', 'newPassword' => $newPassword]);
     }
 }
