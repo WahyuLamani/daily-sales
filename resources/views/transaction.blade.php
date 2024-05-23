@@ -122,7 +122,7 @@
                                 <td>{{$loop->iteration}}</td>
                                 <td>{{$transaction->user->name}}</td>
                                 <td style="text-align: left">{{$transaction->tanggal_transaksi}}</td>
-                                <td><span class="badge text-bg-success">{{$transaction->status_pembayaran}}</span></td>
+                                <td><span class="badge text-bg-{{$transaction->status_pembayaran == 'lunas' ? 'success' : 'warning'}}">{{$transaction->status_pembayaran}}</span></td>
                                 <td>Rp. {{number_format($transaction->total_harga)}}</td>
                                 <td>
                                     <button class="btn btn-dark view-pdf" data-id="{{ $transaction->id }}">
