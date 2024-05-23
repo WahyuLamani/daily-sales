@@ -39,6 +39,13 @@ class BuildApp extends Command
         } else {
             $this->error('Error occurred while running : npm install!');
         }
+        passthru('npm run build', $exitCode);
+        if ($exitCode === 0) {
+            $this->info('Build resources berhasil !!');
+        } else {
+            $this->error('Error occurred while running : npm run build!');
+        }
+
         // Copy .env file
         if (!file_exists('.env')) {
             // copy('.env', '.env.backup'); // Backup existing .env file
