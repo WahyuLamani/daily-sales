@@ -99,7 +99,7 @@
     </div>
     <script type="module">
         $(document).ready(function() {
-            $('.updateBtn').click(function() {
+            $(document).on('click', '.updateBtn', function() {
                 var row = $(this).closest('tr');
                 var productId = row.data('id');
                 var currentPrice = parseInt(row.find('.harga').text());
