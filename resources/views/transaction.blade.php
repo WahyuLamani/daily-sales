@@ -110,7 +110,7 @@
                             <tr>
                                 <th>No.</th>
                                 <th>User</th>
-                                <th>Tanggal</th>
+                                <th style="text-align: left">Tanggal</th>
                                 <th>Status</th>
                                 <th>Total</th>
                                 <th>Action</th>
@@ -121,9 +121,9 @@
                             <tr>
                                 <td>{{$loop->iteration}}</td>
                                 <td>{{$transaction->user->name}}</td>
-                                <td>{{\Carbon\Carbon::create($transaction->tanggal_transaksi)}}</td>
-                                <td>{{$transaction->status_pembayaran}}</td>
-                                <td>Rp. {{$transaction->total_harga}}</td>
+                                <td style="text-align: left">{{$transaction->tanggal_transaksi}}</td>
+                                <td><span class="badge text-bg-success">{{$transaction->status_pembayaran}}</span></td>
+                                <td>Rp. {{number_format($transaction->total_harga)}}</td>
                                 <td>
                                     <button class="btn btn-dark view-pdf" data-id="{{ $transaction->id }}">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-receipt" viewBox="0 0 16 16">

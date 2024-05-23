@@ -69,6 +69,26 @@
     </div>
     <script type="module">
         $("#showAfter").hide();
+        function numberFormat(number, decimals = 0, decPoint = '.', thousandsSep = ',') {
+            // Check if the number is valid
+            if (isNaN(number) || number == null) {
+                return '';
+            }
+
+            number = parseFloat(number);
+
+            // Fixing decimal precision
+            let fixedNumber = number.toFixed(decimals);
+
+            // Split the fixed number into integer and decimal parts
+            let parts = fixedNumber.split('.');
+
+            // Add thousands separator
+            parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, thousandsSep);
+
+            // Combine integer and decimal parts with the custom decimal point
+            return parts.join(decPoint);
+        }
         $(document).ready(function(){
             let chartInstance = null;
             let x = [];
@@ -144,8 +164,8 @@
                         analisisData.forEach(function(entry) {
                             tableBody.append('<tr>' +
                                 '<td>' + entry.month + ' ' + entry.year + '</td>' +
-                                '<td>' + entry.total + '</td>' +
-                                '<td>' + entry.prediksi.toFixed(2) + '</td>' +
+                                '<td>' + numberFormat(entry.total,2, '.', ',') + '</td>' +
+                                '<td>' + numberFormat(entry.prediksi.toFixed(2),2,'.', ',') + '</td>' +
                                 '</tr>');
                         });
                         $("#showAfter").show();
@@ -230,7 +250,7 @@
                 tableBody.append('<tr>' +
                     '<td>' + prediksiMonth + '</td>' +
                     '<td>0</td>' +
-                    '<td>' + prediksiNilai.toFixed(2) + '</td>' +
+                    '<td>' + numberFormat(prediksiNilai.toFixed(2) ,2, '.', ',') + '</td>' +
                     '</tr>');
 
                 // Update Chart

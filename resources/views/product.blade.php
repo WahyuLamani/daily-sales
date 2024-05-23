@@ -83,7 +83,7 @@
                                 <td>{{$loop->iteration}}</td>
                                 <td>{{$product->nama_produk}}</td>
                                 <td>{{$product->category->nama_kategori}}</td>
-                                <td>{{$product->harga}}</td>
+                                <td>Rp. {{number_format($product->harga)}}</td>
                                 <td>{{$product->stok}}</td>
                                 <td>action</td>
                             </tr>
