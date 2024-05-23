@@ -27,12 +27,6 @@ class BuildApp extends Command
      */
     public function handle()
     {
-        passthru('composer install', $exitCode);
-        if ($exitCode === 0) {
-            $this->info('Instalasi dependensi komposer berhasil');
-        } else {
-            $this->error('Error occurred while running : composer install!');
-        }
         passthru('npm install', $exitCode);
         if ($exitCode === 0) {
             $this->info('Instalasi dependensi npm berhasil');
