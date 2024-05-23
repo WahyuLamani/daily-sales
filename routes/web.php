@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AnalisisController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\TransactionController;
@@ -32,6 +33,10 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/products', [ProductController::class, 'index'])->name('products');
         Route::post('/products', [ProductController::class, 'store'])->name('store.products');
         Route::put('/products/{product}', [ProductController::class, 'update']);
+        Route::get('/category', [CategoryController::class, 'index'])->name('category');
+        Route::post('/category', [CategoryController::class, 'store'])->name('store.category');
+        Route::put('/category/{category}', [CategoryController::class, 'update'])->name('update.category');
+        Route::delete('/category/{category}', [CategoryController::class, 'destroy']);
         Route::get('/users/setting', [UserController::class, 'index'])->name('user.setting');
         Route::post('/users/setting', [UserController::class, 'store'])->name('user.create');
         Route::delete('/users/setting/{user}', [UserController::class, 'destroy']);

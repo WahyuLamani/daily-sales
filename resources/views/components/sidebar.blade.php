@@ -22,7 +22,7 @@
                     </a>
                 </li>
                 <li class="nav-item has-submenu">
-                    <a class="nav-link submenu-toggle {{Route::is('products') ? 'active' : ''}}" href="#" data-bs-toggle="collapse" data-bs-target="#submenu-1" aria-expanded="false" aria-controls="submenu-1">
+                    <a class="nav-link submenu-toggle {{Route::is(['products','category']) ? 'active' : ''}}" href="#" data-bs-toggle="collapse" data-bs-target="#submenu-1" aria-expanded="false" aria-controls="submenu-1">
                         <span class="nav-icon">
                         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-card-list" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" d="M14.5 3h-13a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
@@ -39,10 +39,10 @@
                             </svg>
                          </span><!--//submenu-arrow-->
                     </a><!--//nav-link-->
-                    <div id="submenu-1" class="collapse submenu submenu-1 {{Route::is('products') ? 'show' : ''}}" data-bs-parent="#menu-accordion">
+                    <div id="submenu-1" class="collapse submenu submenu-1 {{Route::is(['products','category']) ? 'show' : ''}}" data-bs-parent="#menu-accordion">
                         <ul class="submenu-list list-unstyled">
                             <li class="submenu-item"><a class="submenu-link {{Route::is('products') ? 'active' : ''}}" href="{{route('products')}}">List Produk</a></li>
-                            <li class="submenu-item"><a class="submenu-link" href="">Kategori</a></li>
+                            <li class="submenu-item"><a class="submenu-link {{Route::is('category') ? 'active' : ''}}" href="{{route('category')}}">Kategori</a></li>
                         </ul>
                     </div>
                 </li>
