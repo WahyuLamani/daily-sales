@@ -14,7 +14,13 @@ class TransactionController extends Controller
 {
     public function index()
     {
-        $transactions = Transaction::with('transactionDetails')->get();
+        if (Auth::user()->is_admin) {
+            $transactions = Transaction::with('transactionDetails', 'user')->get();
+        } else {
+            $transactions = Transaction::where('user_id', '=', Auth::user()->id)
+                ->with('transactionDetails', 'user')->get();
+        }
+
         $products = Product::all();
         return view('transaction', compact('transactions', 'products'));
     }

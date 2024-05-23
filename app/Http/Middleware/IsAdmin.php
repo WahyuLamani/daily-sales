@@ -18,7 +18,8 @@ class IsAdmin
     public function handle(Request $request, Closure $next)
     {
         if (!Auth::user()->is_admin) {
-            return abort(403, 'Hanya Admin yang bisa mengakses halaman ini !');
+            return back()->with('toast_error', 'Hanya Admin yang bisa mengakses halaman ' . $request->path());
+            // return abort(403, 'Hanya Admin yang bisa mengakses halaman ini !');
         }
         return $next($request);
     }
