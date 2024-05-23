@@ -67,15 +67,17 @@ class TransactionController extends Controller
 
     function showPDF($id)
     {
-        $transaction = Transaction::with('transactionDetails')->find($id);
-        $pdf = PDF::loadView('export.transaction-detail', compact('transaction'))->setPaper('a4');
+        $transaction = Transaction::with('transactionDetails', 'user')->findOrFail($id);
+        $printDate = Carbon::now()->format('d M, Y H:i:s');
+        $pdf = PDF::loadView('export.transaction-detail', compact('transaction', 'printDate'))->setPaper('a4');
         return $pdf->stream('transaksi_' . $id . '.pdf');
     }
 
     function downloadPDF($id)
     {
-        $transaction = Transaction::with('transactionDetails')->find($id);
-        $pdf = PDF::loadView('export.transaction-detail', compact('transaction'))->setPaper('a4');
+        $transaction = Transaction::with('transactionDetails', 'user')->findOrFail($id);
+        $printDate = Carbon::now()->format('d M, Y H:i:s');
+        $pdf = PDF::loadView('export.transaction-detail', compact('transaction', 'printDate'))->setPaper('a4');
         return $pdf->download('invoice.pdf');
     }
 }

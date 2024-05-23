@@ -11,6 +11,11 @@ class Transaction extends Model
 {
     use HasFactory;
 
+    protected $dates = ['tanggal_transaksi'];
+    protected $cast = [
+        'total_harga' => 'float'
+    ];
+
     protected $guarded = [];
 
     public function transactionDetails()
