@@ -31,6 +31,7 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(['isAdmin'])->group(function () {
         Route::get('/products', [ProductController::class, 'index'])->name('products');
         Route::post('/products', [ProductController::class, 'store'])->name('store.products');
+        Route::put('/products/{product}', [ProductController::class, 'update']);
         Route::get('/users/setting', [UserController::class, 'index'])->name('user.setting');
         Route::post('/users/setting', [UserController::class, 'store'])->name('user.create');
         Route::delete('/users/setting/{user}', [UserController::class, 'destroy']);

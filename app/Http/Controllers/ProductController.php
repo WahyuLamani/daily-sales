@@ -13,7 +13,7 @@ class ProductController extends Controller
     {
         $categories = Category::all();
         $products = Product::all();
-        return view('product',compact('categories','products'));
+        return view('product', compact('categories', 'products'));
     }
 
     public function store(Request $request)
@@ -31,5 +31,14 @@ class ProductController extends Controller
             'stok' => $request->stok
         ]);
         return redirect('products')->withSuccess('Berhasil dibuat');
+    }
+
+    public function update(Request $request, Product $product)
+    {
+        $product->harga = $request->price;
+        $product->stok = $request->stock;
+        $product->save();
+
+        return response()->json(['status' => 'success', 'message' => 'Produk berhasil diperbarui.']);
     }
 }

@@ -1,4 +1,4 @@
-<x-main-layout resources="resources/js/datatables.js,resources/css/dataTables.bootstrap5.css" title="Product">
+<x-main-layout resources="resources/js/jquery.js,resources/js/sweetalert2.js,resources/js/datatables.js,resources/css/dataTables.bootstrap5.css" title="Product">
     <div class="container-fuild">
         <h1 class="app-page-title">Produk</h1>
         <x-modal modal-id='newProduk' title='Buat produk baru' size=''>
@@ -79,13 +79,13 @@
                         </thead>
                         <tbody>
                             @foreach ($products as $product)
-                            <tr>
+                            <tr data-id="{{$product->id}}">
                                 <td>{{$loop->iteration}}</td>
                                 <td>{{$product->nama_produk}}</td>
                                 <td>{{$product->category->nama_kategori}}</td>
-                                <td>Rp. {{number_format($product->harga)}}</td>
-                                <td>{{$product->stok}}</td>
-                                <td>action</td>
+                                <td><span class="harga">{{$product->harga}}</span></td>
+                                <td class="stok">{{$product->stok}}</td>
+                                <td><button class="btn btn-warning updateBtn">Update</button></td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -94,4 +94,75 @@
             </div>
         </div>
     </div>
+    <script type="module">
+        $(document).ready(function() {
+            $('.updateBtn').click(function() {
+                var row = $(this).closest('tr');
+                var productId = row.data('id');
+                var currentPrice = parseInt(row.find('.harga').text());
+                var currentStock = row.find('.stok').text();
+                console.log(currentPrice);
+
+                // Tampilkan modal input menggunakan SweetAlert2
+                Swal.fire({
+                    title: 'Update Produk',
+                    html:
+                        '<input id="price" class="swal2-input" placeholder="Harga" type="number" value="' + currentPrice + '">' +
+                        '<input id="stock" class="swal2-input" placeholder="Stok" type="number" value="' + currentStock + '">',
+                    focusConfirm: false,
+                    preConfirm: () => {
+                        return {
+                            price: $('#price').val(),
+                            stock: $('#stock').val()
+                        };
+                    },
+                    showCancelButton: true,
+                    confirmButtonText: 'Update',
+                    cancelButtonText: 'Batal',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        var price = result.value.price;
+                        var stock = result.value.stock;
+
+                        // Kirim request ke server untuk memperbarui data produk
+                        $.ajax({
+                            url: '/products/' + productId,
+                            method: 'PUT',
+                            data: {
+                                price: price,
+                                stock: stock,
+                                _token: '{{ csrf_token() }}'
+                            },
+                            success: function(response) {
+                                if (response.status === 'success') {
+                                    // Perbarui nilai di tabel
+                                    row.find('.harga').text(price);
+                                    row.find('.stok').text(stock);
+
+                                    Swal.fire(
+                                        'Berhasil!',
+                                        'Data produk berhasil diperbarui.',
+                                        'success'
+                                    );
+                                } else {
+                                    Swal.fire(
+                                        'Gagal!',
+                                        'Terjadi kesalahan saat memperbarui data produk.',
+                                        'error'
+                                    );
+                                }
+                            },
+                            error: function(xhr, status, error) {
+                                Swal.fire(
+                                    'Error!',
+                                    'Terjadi kesalahan: ' + error,
+                                    'error'
+                                );
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
 </x-main-layout>
