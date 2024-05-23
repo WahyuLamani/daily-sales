@@ -1,4 +1,4 @@
-<x-main-layout resources="" title="Account">
+<x-main-layout resources="resources/js/datatables.js,resources/js/jquery.js,resources/js/sweetalert2.js" title="Account">
     <div class="container-fluid">			    
         <h1 class="app-page-title">Account Management</h1>
         <hr class="mb-4">
