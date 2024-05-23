@@ -59,13 +59,13 @@ class TransactionController extends Controller
 
         return redirect()->route('transaction')->with('success', 'Transaksi berhasil');
     }
-    function getProductAmount($id)
+    public function getProductAmount($id)
     {
         $produk = Product::find($id);
         return response()->json(['harga' => $produk->harga, 'stok' => $produk->stok]);
     }
 
-    function showPDF($id)
+    public function showPDF($id)
     {
         $transaction = Transaction::with('transactionDetails', 'user')->findOrFail($id);
         $printDate = Carbon::now()->format('d M, Y H:i:s');
@@ -73,11 +73,20 @@ class TransactionController extends Controller
         return $pdf->stream('transaksi_' . $id . '.pdf');
     }
 
-    function downloadPDF($id)
+    public function downloadPDF($id)
     {
         $transaction = Transaction::with('transactionDetails', 'user')->findOrFail($id);
         $printDate = Carbon::now()->format('d M, Y H:i:s');
         $pdf = PDF::loadView('export.transaction-detail', compact('transaction', 'printDate'))->setPaper('a4');
         return $pdf->download('invoice.pdf');
+    }
+
+    public function pay(Request $request)
+    {
+        $transaction = Transaction::findOrFail($request->id);
+        $transaction->status_pembayaran = 'lunas';
+        $transaction->save();
+
+        return response()->json(['status' => 'success', 'message' => 'Pembayaran berhasil!']);
     }
 }

@@ -24,6 +24,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::get('/order', [TransactionController::class, 'index'])->name('transaction');
     Route::post('/order', [TransactionController::class, 'store'])->name('store.transaction');
+    Route::post('/order/payment', [TransactionController::class, 'pay'])->name('pay.transaction');
     Route::get('produk/{id}/harga-stok', [TransactionController::class, 'getProductAmount']);
     Route::get('transaksi/{id}/pdf', [TransactionController::class, 'showPDF']);
     Route::get('transaksi/{id}/download', [TransactionController::class, 'downloadPDF']);

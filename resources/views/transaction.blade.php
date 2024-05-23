@@ -1,4 +1,4 @@
-<x-main-layout resources="resources/js/jquery.js,resources/js/datatables.js,resources/css/dataTables.bootstrap5.css" title="Transaction">
+<x-main-layout resources="resources/js/jquery.js,resources/js/datatables.js,resources/js/sweetalert2.js,resources/css/dataTables.bootstrap5.css" title="Transaction">
     <div class="container-fuild">
         <h1 class="app-page-title">Transaction</h1>
 
@@ -122,7 +122,7 @@
                                 <td>{{$loop->iteration}}</td>
                                 <td>{{$transaction->user->name}}</td>
                                 <td style="text-align: left">{{$transaction->tanggal_transaksi}}</td>
-                                <td><span class="badge text-bg-{{$transaction->status_pembayaran == 'lunas' ? 'success' : 'warning'}}">{{$transaction->status_pembayaran}}</span></td>
+                                <td><span class="status-pembayaran badge text-bg-{{$transaction->status_pembayaran == 'lunas' ? 'success' : 'warning'}}">{{$transaction->status_pembayaran}}</span></td>
                                 <td>Rp. {{number_format($transaction->total_harga)}}</td>
                                 <td>
                                     <button class="btn btn-dark view-pdf" data-id="{{ $transaction->id }}">
@@ -136,6 +136,13 @@
                                             <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0M9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1m-1 4v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L7.5 11.293V7.5a.5.5 0 0 1 1 0"/>
                                           </svg>
                                     </a>
+                                    @if ($transaction->status_pembayaran == 'belum lunas')
+                                        <button class="btn btn-primary handle-pembayaran" data-id="{{ $transaction->id }}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Klik untuk Pelunasan">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-credit-card-fill" viewBox="0 0 16 16">
+                                            <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v1H0zm0 3v5a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7zm3 2h1a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-1a1 1 0 0 1 1-1"/>
+                                            </svg>
+                                        </button>
+                                    @endif
                                 </td>
                             </tr>
                             @endforeach
@@ -151,6 +158,59 @@
     <script type="module">
         $('#submitForm').hide();
         $(document).ready(function() {
+            $(document).on('click', '.handle-pembayaran', function() {
+                let idTransaksi = $(this).data('id')
+                let $rowtx = $(this).closest('tr');
+                let status = $rowtx.find('.status-pembayaran')
+                Swal.fire({
+                    title: 'Apakah Anda yakin?',
+                    text: "Lunasi Pembayaran User" ,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya, bayar!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Kirim request ke server untuk menyimpan pembayaran
+                        $.ajax({
+                            url: '/order/payment',
+                            method: 'POST',
+                            data: {
+                                id: idTransaksi,
+                                _token: '{{ csrf_token() }}'
+                            },
+                            success: function(response) {
+                                if(response.status === 'success') {
+                                    Swal.fire(
+                                        'Berhasil!',
+                                        'Pembayaran berhasil dilakukan.',
+                                        'success'
+                                    );
+                                    $('.handle-pembayaran').hide();
+                                    status.text('lunas')
+                                    status.removeClass('text-bg-warning').addClass('text-bg-success');
+                                } else {
+                                    Swal.fire(
+                                        'Gagal!',
+                                        response.message,
+                                        'error'
+                                    );
+                                }
+                            },
+                            error: function(xhr, status, error) {
+                                Swal.fire(
+                                    'Error!',
+                                    'Terjadi kesalahan: ' + error,
+                                    'error'
+                                );
+                            }
+                        });
+                    }
+                });
+                
+            });
+
             let rowNumber = 1;      
             $('#addRow').click(function() {
                 let row = `<tr>

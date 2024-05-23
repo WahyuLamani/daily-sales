@@ -11,11 +11,14 @@
             margin: 0;
             padding: 0;
             line-height: 1.6;
+            position: relative;
         }
 
         .container {
             width: 90%;
             margin: 0 auto;
+            position: relative;
+            z-index: 1;
         }
 
         .header, .footer {
@@ -66,15 +69,30 @@
             margin-top: 20px;
         }
 
+        .status-background {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 100px;
+            color: {{ $transaction->status_pembayaran == 'lunas' ? 'rgba(0, 128, 0, 0.1)' : 'rgba(255, 0, 0, 0.1)' }};
+            font-weight: bold;
+            white-space: nowrap;
+            z-index: 0;
+        }
         .print-date {
             text-align: right;
             font-size: 12px;
             color: #777;
             padding-top: 1em;
         }
+        
     </style>
 </head>
 <body>
+    <div class="status-background">
+        {{ strtoupper($transaction->status_pembayaran) }}
+    </div>
     <div class="container">
         <div class="header">
             <h2>Detail Transaksi</h2>
