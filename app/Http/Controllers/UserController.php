@@ -29,11 +29,11 @@ class UserController extends Controller
             'email' => ['required', 'email', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed']
         ]);
-
         User::create([
             'name' => ucwords($request->nama),
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'is_admin' => $request->filled('is_admin') ? true : false,
         ]);
 
         return redirect()->route('user.setting')->with('success', 'User baru telah di buat');

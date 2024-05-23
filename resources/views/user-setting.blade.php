@@ -37,6 +37,10 @@
                             @enderror
                         </div>
                     </div>
+                    <div class="form-check form-switch mb-3">
+                        <input class="form-check-input" type="checkbox" id="settings-switch-1" name="is_admin">
+                        <label class="form-check-label" for="settings-switch-1">Sebagai Admin ?</label>
+                    </div>
                     <div class="d-flex justify-content-end">
                         <button type="submit" name="submit" class="btn app-btn-primary">Simpan</button>
                     </div>
