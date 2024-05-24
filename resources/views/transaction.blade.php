@@ -95,17 +95,48 @@
                 </form>
             </div>
         </x-modal>
+        <x-modal modal-id="SeeProduk" title="List Produk" size="modal-xl">
+            <table style="width:100% ; font-size: 22px" class="table data-table table-striped">
+                <thead>
+                    <tr>
+                        <th>Kategori</th>
+                        <th>Nama Produk</th>
+                        <th>Harga</th>
+                        <th style="text-align: center">Stok</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($products as $product)
+                    <tr>
+                        <td>{{$product->category->nama_kategori}}</td>
+                        <td><b>{{$product->nama_produk}}</b></td>
+                        <td>Rp. {{number_format($product->harga)}}</td>
+                        <td style="text-align: center">{{$product->stok}}</td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </x-modal>
         <div class="row">
             <div class="app-card">
                 <div class="p-3">
-                    <button type="button" class="btn app-btn-primary my-3" data-bs-toggle="modal"
+                    <div class="d-flex justify-content-between">
+                        <button type="button" class="btn app-btn-primary my-3" data-bs-toggle="modal"
                         data-bs-target="#modalNewOrder">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bag-plus-fill" viewBox="0 0 16 16">
                             <path fill-rule="evenodd" d="M10.5 3.5a2.5 2.5 0 0 0-5 0V4h5zm1 0V4H15v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4h3.5v-.5a3.5 3.5 0 1 1 7 0M8.5 8a.5.5 0 0 0-1 0v1.5H6a.5.5 0 0 0 0 1h1.5V12a.5.5 0 0 0 1 0v-1.5H10a.5.5 0 0 0 0-1H8.5z"/>
                         </svg>
                         Order
                     </button>
-                    <table id='data-table' class="table table-striped">
+                    <button type="button" class="btn app-btn-primary my-3" data-bs-toggle="modal"
+                        data-bs-target="#modalSeeProduk">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bag-plus-fill" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M10.5 3.5a2.5 2.5 0 0 0-5 0V4h5zm1 0V4H15v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4h3.5v-.5a3.5 3.5 0 1 1 7 0M8.5 8a.5.5 0 0 0-1 0v1.5H6a.5.5 0 0 0 0 1h1.5V12a.5.5 0 0 0 1 0v-1.5H10a.5.5 0 0 0 0-1H8.5z"/>
+                        </svg>
+                        Order
+                    </button>
+                    </div>
+                    <table id="data-table" class="table data-table table-striped">
                         <thead>
                             <tr>
                                 <th>No.</th>
