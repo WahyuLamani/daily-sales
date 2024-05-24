@@ -257,7 +257,11 @@
                 let jumlah = parseInt($(this).val());
                 let stok =parseInt($row.find('.stok').text());
                 if (parseInt(jumlah) > stok ) {
-                    alert('Jumlah pembelian melebihi stok produk ' + $row.find('.product-select option:selected').text());
+                    Swal.fire(
+                        'Error!',
+                        'Jumlah pembelian melebihi stok produk ' + $row.find('.product-select option:selected').text(),
+                        'error'
+                    );
                     $(this).val(''); // Kosongkan input jumlah
                     updateSubtotal($row); // Update subtotal dengan nilai sebelumnya
                 } else {
@@ -298,7 +302,11 @@
 
                     if (parseInt(jumlah) > stok || isNaN(parseInt(jumlah))) {
                         isValid = false;
-                        alert('Jumlah pembelian melebihi stok produk ' + $row.find('.product-select option:selected').text());
+                        Swal.fire(
+                            'Error!',
+                            'Jumlah pembelian melebihi stok produk ' + $row.find('.product-select option:selected').text(),
+                            'error'
+                        );
                         return false; // Hentikan iterasi
                     }
                 });
