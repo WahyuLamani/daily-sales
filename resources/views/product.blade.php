@@ -66,7 +66,7 @@
                           </svg> 
                           Produk
                     </button>
-                    <table id='data-table' class="table table-striped">
+                    <table class="table data-table table-striped">
                         <thead>
                             <tr>
                                 <th>No.</th>
