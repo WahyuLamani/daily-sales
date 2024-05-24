@@ -41,8 +41,14 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
-        $user->delete();
-        return response()->json(['message' => 'Success']);
+        if ($user->id === 1) {
+            return response()->json(['status' => 'error', 'message' => 'Super user tidak bisa di delete']);
+        } elseif ($user->id === Auth::user()->id) {
+            return response()->json(['status' => 'error', 'message' => 'Tidak bisa Delete User sendiri']);
+        } else {
+            $user->delete();
+        }
+        return response()->json(['status' => 'success', 'message' => 'Success']);
     }
 
     public function resetPassword(User $user)

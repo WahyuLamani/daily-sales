@@ -113,12 +113,20 @@
                                 _token: '{{ csrf_token() }}'
                             },
                             success: function(response) {
-                                $('#user-' + userId).remove();
-                                Swal.fire(
-                                    'Dihapus!',
-                                    'User telah dihapus.',
-                                    'success'
-                                );
+                                if(response.status === 'success'){
+                                    $('#user-' + userId).remove();
+                                    Swal.fire(
+                                        'Dihapus!',
+                                        'User telah dihapus.',
+                                        'success'
+                                    );
+                                }else{
+                                    Swal.fire(
+                                        'Gagal!',
+                                         response.message,
+                                        'error'
+                                    );
+                                }
                             },
                             error: function(response) {
                                 Swal.fire(
