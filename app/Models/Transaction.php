@@ -45,13 +45,14 @@ class Transaction extends Model
             ->orderBy(DB::raw('MONTH(tanggal_transaksi)'), 'asc');
     }
 
-    public function scopeTotalPerMonthAndCategory($query)
+    public function scopeTotalPerMonthAndCategory()
     {
-        return $query->select(
+        return self::select(
             'product_categories.nama_kategori',
             DB::raw('YEAR(tanggal_transaksi) as year'),
             DB::raw('MONTH(tanggal_transaksi) as month'),
-            DB::raw('SUM(total_harga) as total')
+            // DB::raw('SUM(total_harga) as total')
+            DB::raw('SUM(transaction_details.jumlah * products.harga) as total')
         )
             ->join('transaction_details', 'transaction_details.transaction_id', '=', 'transactions.id')
             ->join('products', 'products.id', '=', 'transaction_details.product_id')
