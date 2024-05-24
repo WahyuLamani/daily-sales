@@ -37,7 +37,8 @@
                                     <div class="col-6">
                                         @if (Route::has('password.request'))   
                                             <div class="forgot-password text-end">
-                                                <a href="{{route('password.request')}}">Forgot password?</a>
+                                                {{-- {{route('password.request')}} --}}
+                                                <a href="/lupapassword">Forgot password?</a>
                                             </div>
                                         @endif
                                     </div><!--//col-6-->

@@ -21,6 +21,9 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
+Route::get('/lupapassword', function () {
+    return view('lupa-password');
+});
 Route::middleware(['auth'])->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::get('/order', [TransactionController::class, 'index'])->name('transaction');
@@ -47,4 +50,3 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/account', [UserController::class, 'account'])->name('user.account');
     Route::post('/account', [UserController::class, 'update'])->name('user.account.update');
 });
-Route::get('/about', [HomeController::class, 'about'])->name('about');
