@@ -5,12 +5,42 @@ namespace App\Http\Controllers;
 use App\Models\Transaction;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
     public function index()
     {
-        $transaksiPerMonthAndCategory = Transaction::totalPerMonthAndCategory()->get();
+        if (Auth::user()->is_admin) {
+            $transaksiPerMonthAndCategory = Transaction::totalPerMonthAndCategory()
+                ->get();
+            $transactions = Transaction::all();
+            $transactionMonth = Transaction::monthLatest();
+        } else {
+            $transaksiPerMonthAndCategory = Transaction::totalPerMonthAndCategory()
+                ->where('user_id', '=', Auth::user()->id)
+                ->get();
+            $transactions = Transaction::where('user_id', '=', Auth::user()->id);
+            $transactionMonth = Transaction::monthLatest()->where('user_id', '=', Auth::user()->id);
+        }
+
+        $dataSets = $this->populateDataToChart($transaksiPerMonthAndCategory);
+        $count = collect();
+        $count["Penjualan"] = $transactions->sum('total_harga');
+        $count["Transaksi"] = $transactions->count();
+        $count["Penjualan bulan terakhir"] = $transactionMonth->sum('total_harga');
+        $count["Transaksi Bulan terakhir"] = $transactionMonth->count();
+        return view('home', [
+            'labels' => $dataSets['labels'],
+            'datasets' => $dataSets['chartDatasets'],
+            'count' => $count
+        ]);
+    }
+
+
+
+    private function populateDataToChart($query)
+    {
         // Prepare labels for the last 12 months
         $labels = collect();
         for ($i = 11; $i >= 0; $i--) {
@@ -18,7 +48,7 @@ class HomeController extends Controller
             $labels->push($date->format('F Y'));
         }
 
-        $allCategories = $transaksiPerMonthAndCategory->pluck('nama_kategori')->unique();
+        $allCategories = $query->pluck('nama_kategori')->unique();
         $datasets = [];
 
         // Initialize dataset for each category
@@ -27,7 +57,7 @@ class HomeController extends Controller
         }
 
         // Fill the dataset with actual data
-        foreach ($transaksiPerMonthAndCategory as $data) {
+        foreach ($query as $data) {
             $dateLabel = date('F Y', mktime(0, 0, 0, $data->month, 1, $data->year));
             $labelIndex = $labels->search($dateLabel);
 
@@ -46,17 +76,6 @@ class HomeController extends Controller
                 'fill' => false
             ];
         })->values();
-
-        $count = collect();
-        $transactions = Transaction::all();
-        $count["Penjualan"] = $transactions->sum('total_harga');
-        $count["Transaksi"] = $transactions->count();
-        $count["Penjualan bulan terakhir"] = Transaction::monthLatest()->sum('total_harga');
-        $count["Transaksi Bulan terakhir"] = Transaction::monthLatest()->count();
-        return view('home', [
-            'labels' => $labels,
-            'datasets' => $chartDatasets,
-            'count' => $count
-        ]);
+        return ['chartDatasets' => $chartDatasets, 'labels' => $labels];
     }
 }
