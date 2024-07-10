@@ -146,8 +146,8 @@
                                 $row.remove();
                                 Swal.fire(
                                     'Dihapus!',
-                                    'User telah dihapus.',
-                                    'success'
+                                    response.message,
+                                    response.status
                                 );
                             },
                             error: function(response) {
