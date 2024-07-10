@@ -41,4 +41,10 @@ class ProductController extends Controller
 
         return response()->json(['status' => 'success', 'message' => 'Produk berhasil diperbarui.']);
     }
+    
+    public function destroy($product) {
+        $id = Product::findOrFail($product);
+        $id->delete();
+        return response()->json(['status' => 'success', 'message' => 'Produk berhasil Dihapus.']);
+    }
 }

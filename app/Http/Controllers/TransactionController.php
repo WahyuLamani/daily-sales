@@ -71,19 +71,27 @@ class TransactionController extends Controller
         return response()->json(['harga' => $produk->harga, 'stok' => $produk->stok]);
     }
 
+    private function getPrintData($id){
+        $transaction = Transaction::with(['transactionDetails' => function($query){
+            $query->with(['product' => fn($q) => $q->withTrashed()]);
+        }], 'user')->findOrFail($id);
+        $printDate = Carbon::now()->format('d M, Y H:i:s');
+        return compact('transaction', 'printDate');
+    }
+
     public function showPDF($id)
     {
-        $transaction = Transaction::with('transactionDetails', 'user')->findOrFail($id);
-        $printDate = Carbon::now()->format('d M, Y H:i:s');
-        $pdf = PDF::loadView('export.transaction-detail', compact('transaction', 'printDate'))->setPaper('a4');
+        // $transaction = Transaction::with('transactionDetails', 'user')->findOrFail($id);
+
+        $data = collect($this->getPrintData($id));
+        $pdf = PDF::loadView('export.transaction-detail', ['transaction' => $data['transaction'], 'printDate' => $data['printDate']])->setPaper('a4');
         return $pdf->stream('transaksi_' . $id . '.pdf');
     }
 
     public function downloadPDF($id)
     {
-        $transaction = Transaction::with('transactionDetails', 'user')->findOrFail($id);
-        $printDate = Carbon::now()->format('d M, Y H:i:s');
-        $pdf = PDF::loadView('export.transaction-detail', compact('transaction', 'printDate'))->setPaper('a4');
+        $data = $this->getPrintData($id);
+        $pdf = PDF::loadView('export.transaction-detail', ['transaction' => $data['transaction'], 'printDate' => $data['printDate']])->setPaper('a4');
         return $pdf->download('invoice.pdf');
     }
 
